@@ -1,16 +1,13 @@
 import axios, { AxiosResponse, AxiosError } from "axios";
-import { PokemonStats } from "./ApiInterface";
-
-export async function fetchPokemonStats(): Promise<any> {
+export async function fetchPokemonStats(name: string): Promise<any> {
   try {
     // Make the API call using Axios
     const response: AxiosResponse = await axios.get(
-      "https://pokeapi.co/api/v2/pokemon/bulbasaur"
+      "https://pokeapi.co/api/v2/pokemon/" + name
     );
 
     // Extract the data from the response
-    const results = {species: response.data.species, stats: response.data.stats}
-    return results;
+    return response.data;
   } catch (error) {
     // Handle errors
     if (axios.isAxiosError(error)) {
@@ -30,25 +27,30 @@ export async function fetchPokemonStats(): Promise<any> {
   }
 }
 
-export async function fetchPokemonStatsProcess(): Promise<PokemonStats> {
-  const data: any = await fetchPokemonStats();
-  let pokemonStats: PokemonStats = {};
-  pokemonStats.name = data.species.name
-  data.stats.map((element: any) => {
-    if (element.stat.name == "hp") {
-      pokemonStats.hp = element.base_stat;
-    } else if (element.stat.name == "attack") {
-      pokemonStats.attack = element.base_stat;
-    } else if (element.stat.name == "defence") {
-      pokemonStats.defence = element.base_stat;
-    } else if (element.stat.name == "special-attack") {
-      pokemonStats.specialAttack = element.base_stat;
-    } else if (element.stat.name == "special-defence") {
-      pokemonStats.specialDefence = element.base_stat;
-    } else if (element.stat.name == "speed") {
-      pokemonStats.speed = element.base_stat;
+export async function fetchPokedexByGeneration(
+  generation: number
+): Promise<any> {
+  try {
+    // Make the API call using Axios
+    const response: AxiosResponse = await axios.get(
+      "https://pokeapi.co/api/v2/pokedex/" + generation
+    );
+    return response.data;
+  } catch (error) {
+    // Handle errors
+    if (axios.isAxiosError(error)) {
+      // The request was made and the server responded with a status code
+      const axiosError: AxiosError = error;
+      if (axiosError.response) {
+        console.error(
+          "Server responded with error status:",
+          axiosError.response.status
+        );
+        console.error("Error message:", axiosError.response.data);
+      } else {
+        console.error("No response received from server");
+      }
     }
-  });
-
-  return pokemonStats;
+    throw error;
+  }
 }
