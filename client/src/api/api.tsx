@@ -1,10 +1,9 @@
 import axios, { AxiosResponse, AxiosError } from "axios";
-import { PokemonStats, Pokemon } from "./ApiInterface";
-export async function fetchPokemonStats(): Promise<any> {
+export async function fetchPokemonStats(name: string): Promise<any> {
   try {
     // Make the API call using Axios
     const response: AxiosResponse = await axios.get(
-      "https://pokeapi.co/api/v2/pokemon/bulbasaur"
+      "https://pokeapi.co/api/v2/pokemon/" + name
     );
 
     // Extract the data from the response

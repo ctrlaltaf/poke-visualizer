@@ -15,8 +15,8 @@ export async function parsePokedexByGeneration(): Promise<Pokemon[]> {
   return pokedex;
 }
 
-export async function parsePokemonStats(): Promise<PokemonStats> {
-  const data: any = await fetchPokemonStats();
+export async function parsePokemonStats(name: string): Promise<PokemonStats> {
+  const data: any = await fetchPokemonStats(name);
   const results = {
     species: data.species,
     stats: data.stats,
@@ -40,4 +40,18 @@ export async function parsePokemonStats(): Promise<PokemonStats> {
   });
 
   return pokemonStats;
+}
+
+export async function enrichPokedexWithStats(
+  pokedexEntries: Pokemon[]
+): Promise<Pokemon[]> {
+  const result = pokedexEntries.map(async (entries: any) => {
+    // console.log(entries.name)
+    const stats = await parsePokemonStats(entries.name);
+    // console.log(entries.name, stats)
+    return { ...entries, stats };
+  });
+//   console.log(Promise.all(result))
+//   const pokedex: Pokemon[] = [];
+  return Promise.all(result);
 }

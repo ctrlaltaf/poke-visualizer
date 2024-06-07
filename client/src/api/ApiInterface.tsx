@@ -12,4 +12,10 @@ export interface Pokemon {
   name?: string;
   generation?: number;
   entry?: string;
+  stats?: PokemonStats;
+}
+
+export interface Pokedex {
+  pokemon?: Pokemon;
+  stats: PokemonStats;
 }
