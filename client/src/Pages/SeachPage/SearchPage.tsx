@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { fetchPokemonStatsProcess } from "../../api/api";
-import { PokemonStats } from "../../api/ApiInterface";
+import {
+  fetchPokedexDataByGenerationProcess,
+  fetchPokemonStatsProcess,
+} from "../../api/api";
+import { Pokemon, PokemonStats } from "../../api/ApiInterface";
 
 const SearchPage: React.FC = () => {
   const [pokemonStats, setPokemonStats] = useState<PokemonStats | null>(null);
+  const [pokedex, setPokedex] = useState<Pokemon[] | null>(null);
 
   useEffect(() => {
     const fetchPokemonStats = async () => {
@@ -17,7 +21,18 @@ const SearchPage: React.FC = () => {
       }
     };
 
-    fetchPokemonStats();
+    const fetchPokedexData = async () => {
+      try {
+        // Fetch Pokemon stats
+        const pokedex = await fetchPokedexDataByGenerationProcess();
+        setPokedex(pokedex);
+      } catch (error) {
+        // Handle errors
+      }
+    };
+
+    fetchPokedexData();
+    // fetchPokemonStats();
   }, []);
 
   return (
@@ -32,6 +47,13 @@ const SearchPage: React.FC = () => {
           <li>Special Attack: {pokemonStats.specialAttack}</li>
           <li>Special Defence: {pokemonStats.specialDefence}</li>
           <li>Speed: {pokemonStats.speed}</li>
+        </ul>
+      )}
+      {pokedex && (
+        <ul>
+          {pokedex.map((pokemon: any) => (
+            <li key={pokemon.entry}>{pokemon.name}</li>
+          ))}
         </ul>
       )}
     </>
