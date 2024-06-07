@@ -1,8 +1,10 @@
 import { Pokemon, PokemonStats } from "../Api/ApiInterface";
 import { fetchPokedexByGeneration, fetchPokemonStats } from "../Api/api";
 
-export async function parsePokedexByGeneration(): Promise<Pokemon[]> {
-  const data: any = await fetchPokedexByGeneration();
+export async function parsePokedexByGeneration(
+  generation: number
+): Promise<Pokemon[]> {
+  const data: any = await fetchPokedexByGeneration(generation);
   const results = data.pokemon_entries;
   let pokedex: Pokemon[] = [];
   results.map((element: any) => {
@@ -51,7 +53,7 @@ export async function enrichPokedexWithStats(
     // console.log(entries.name, stats)
     return { ...entries, stats };
   });
-//   console.log(Promise.all(result))
-//   const pokedex: Pokemon[] = [];
+  //   console.log(Promise.all(result))
+  //   const pokedex: Pokemon[] = [];
   return Promise.all(result);
 }

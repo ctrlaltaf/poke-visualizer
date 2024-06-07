@@ -1,45 +1,13 @@
 import React, { useEffect, useState } from "react";
-import {
-  enrichPokedexWithStats,
-  parsePokedexByGeneration,
-  parsePokemonStats,
-} from "../../Tools/ApiParser";
-import { PokemonStats, Pokemon } from "../../Api/ApiInterface";
+import { Pokemon } from "../../Api/ApiInterface";
 import { getPokedexWithStatsByGeneration } from "../../Service/PokedexService";
 
 const SearchPage: React.FC = () => {
-  const [pokemonStats, setPokemonStats] = useState<PokemonStats | null>(null);
   const [pokedex, setPokedex] = useState<Pokemon[] | null>(null);
-
-  // useEffect(() => {
-  //   const fetchPokemonStats = async () => {
-  //     try {
-  //       // Fetch Pokemon stats
-  //       const stats = await parsePokemonStats();
-
-  //       setPokemonStats(stats);
-  //     } catch (error) {
-  //       // Handle errors
-  //     }
-  //   };
-
-  //   const fetchPokedexData = async () => {
-  //     try {
-  //       // Fetch Pokemon stats
-  //       const pokedex = await parsePokedexByGeneration();
-  //       setPokedex(pokedex);
-  //     } catch (error) {
-  //       // Handle errors
-  //     }
-  //   };
-
-  //   fetchPokedexData();
-  //   fetchPokemonStats();
-  // }, []);
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await getPokedexWithStatsByGeneration(1);
+      const data = await getPokedexWithStatsByGeneration(3);
       setPokedex(data);
     };
     fetchData();

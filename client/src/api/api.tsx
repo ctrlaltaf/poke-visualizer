@@ -27,11 +27,13 @@ export async function fetchPokemonStats(name: string): Promise<any> {
   }
 }
 
-export async function fetchPokedexByGeneration(): Promise<any> {
+export async function fetchPokedexByGeneration(
+  generation: number
+): Promise<any> {
   try {
     // Make the API call using Axios
     const response: AxiosResponse = await axios.get(
-      "https://pokeapi.co/api/v2/pokedex/3"
+      "https://pokeapi.co/api/v2/pokedex/" + generation
     );
     return response.data;
   } catch (error) {
