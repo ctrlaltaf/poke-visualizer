@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from "react";
-import {
-  fetchPokedexDataByGenerationProcess,
-  fetchPokemonStatsProcess,
-} from "../../api/api";
-import { Pokemon, PokemonStats } from "../../api/ApiInterface";
+import { parsePokedexByGeneration, parsePokemonStats } from "../../Tools/ApiParser";
+import { PokemonStats, Pokemon } from "../../Api/ApiInterface";
 
 const SearchPage: React.FC = () => {
   const [pokemonStats, setPokemonStats] = useState<PokemonStats | null>(null);
@@ -13,7 +10,7 @@ const SearchPage: React.FC = () => {
     const fetchPokemonStats = async () => {
       try {
         // Fetch Pokemon stats
-        const stats = await fetchPokemonStatsProcess();
+        const stats = await parsePokemonStats();
 
         setPokemonStats(stats);
       } catch (error) {
@@ -24,7 +21,7 @@ const SearchPage: React.FC = () => {
     const fetchPokedexData = async () => {
       try {
         // Fetch Pokemon stats
-        const pokedex = await fetchPokedexDataByGenerationProcess();
+        const pokedex = await parsePokedexByGeneration();
         setPokedex(pokedex);
       } catch (error) {
         // Handle errors
@@ -32,7 +29,7 @@ const SearchPage: React.FC = () => {
     };
 
     fetchPokedexData();
-    // fetchPokemonStats();
+    fetchPokemonStats();
   }, []);
 
   return (
