@@ -1,8 +1,6 @@
 import React from "react";
 
-interface Props {}
-
-const HomePage: React.FC = (props: Props) => {
+const HomePage: React.FC = () => {
   return (
     <>
       <h1>Home Page</h1>

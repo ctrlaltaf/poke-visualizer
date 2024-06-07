@@ -2,9 +2,7 @@ import React, { useEffect, useState } from "react";
 import { fetchPokemonStatsProcess } from "../../api/api";
 import { PokemonStats } from "../../api/ApiInterface";
 
-interface Props {}
-
-const SearchPage: React.FC = (props: Props) => {
+const SearchPage: React.FC = () => {
   const [pokemonStats, setPokemonStats] = useState<PokemonStats | null>(null);
 
   useEffect(() => {
